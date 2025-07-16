@@ -4,7 +4,7 @@ import Input from "../component/input";
 import Button from "../component/button";
 import Navbar from "../component/Navbar";
 
-export default function LoginPage() {
+export default function Register() {
   return (
     <>
       <Navbar />
