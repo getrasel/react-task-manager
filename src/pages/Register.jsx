@@ -18,7 +18,7 @@ export default function Register() {
               <Input type="text" label="Name" />
               <Input type="email" label="Email Address" />
               <Input type="password" label="Password" />
-              <Input type="confirm password" label="Confirm Password" />
+              <Input type="password" label="Confirm Password" />
               <div>
                 <label className="inline-flex items-center cursor-pointer">
                   <input type="checkbox" className="mr-1.5 accent-blue-500 " />I
