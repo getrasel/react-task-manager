@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router";
 import Input from "../component/input";
 import Button from "../component/button";
-import Navbar from "../component/Navbar";
 
 export default function Register() {
   return (
     <>
-      <Navbar />
       <div className="bg-slate-300 w-full h-screen flex items-center justify-center">
         <div className="bg-white shadow-md p-8 w-md rounded-lg">
           <h1 className="text-center text-2xl font-semibold uppercase pb-2">
