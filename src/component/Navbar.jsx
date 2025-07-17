@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-export default function Navbar({ TaskAdd }) {
+export default function Navbar({ TaskAddNav }) {
   return (
     <header className="sticky top-0 bg-white border border-gray-200 shadow z-10">
       <div className="flex justify-between align-center py-4 px-8">
@@ -9,7 +9,7 @@ export default function Navbar({ TaskAdd }) {
           Task Manager
         </Link>
         <nav className="flex gap-6">
-          <Link to="/" onClick={() => TaskAdd(true)}>
+          <Link to="/" onClick={() => TaskAddNav(true)}>
             Add Task
           </Link>
           <Link to="/profile">Profile</Link>

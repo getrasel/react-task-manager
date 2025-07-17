@@ -8,7 +8,7 @@ export default function Layout({ children }) {
     <div className="height">
       {addTask && <AddTask TaskAdd={setAddTask} />}
 
-      <Navbar TaskAdd={setAddTask} />
+      <Navbar TaskAddNav={setAddTask} />
       <main className="bg-gray-100 min-h-full">{children}</main>
     </div>
   );
