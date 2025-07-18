@@ -2,8 +2,31 @@ import React from "react";
 import { Link } from "react-router";
 import Input from "../component/input";
 import Button from "../component/button";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function LoginPage() {
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    axios
+      .post("https://task-manager64.up.railway.app/api/v1/auth/login", data)
+      .then((res) => {
+        toast.success("Login Successfully Done");
+        const token = res.data.access_token;
+        localStorage.setItem("token", token);
+      })
+      .catch((err) => {
+        if (err.status === 400) {
+          toast.error("Bad request, validation errors");
+        } else {
+          toast.error(err.response.data.message);
+        }
+      });
+  };
   return (
     <>
       <div className="bg-slate-300 w-full h-screen flex items-center justify-center">
@@ -11,10 +34,11 @@ export default function LoginPage() {
           <h1 className="text-center text-2xl font-semibold uppercase pb-2">
             Login
           </h1>
-          <form action="">
+          <Toaster />
+          <form onSubmit={handleLogin}>
             <div className="space-y-3">
-              <Input type="text" label="Name" />
-              <Input type="email" label="Email Address" />
+              <Input type="email" label="Email Address" inputName="email" />
+              <Input type="password" label="Password" inputName="password" />
               <div>
                 <label className="inline-flex items-center cursor-pointer">
                   <input type="checkbox" className="mr-1.5 accent-blue-500 " />

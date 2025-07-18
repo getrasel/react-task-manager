@@ -9,7 +9,6 @@ export default function Register() {
   const [error, setError] = useState([]);
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     const data = {
       name: e.target.name.value,
       email: e.target.email.value,
@@ -20,12 +19,16 @@ export default function Register() {
       .post("https://task-manager64.up.railway.app/api/v1/auth/register", data)
       .then((res) => {
         toast.success("Login Successfully Done, Please Login");
+        console.log(res);
         setError([]);
       })
       .catch((err) => {
         console.log(err);
+
         if (err.status == 400) {
           setError(err.response.data.message);
+        } else if (err.status == 401) {
+          toast.error("User already exists or password mismatch");
         } else {
           setError(err.response.data.message);
         }
