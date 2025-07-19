@@ -1,16 +1,19 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Input from "../component/input";
 import Button from "../component/button";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const data = {
       email: e.target.email.value,
+      // mdraselahmed064@gmail.com
       password: e.target.password.value,
+      //pass: 'FnodV05!K:2_0H>j
     };
     axios
       .post("https://task-manager64.up.railway.app/api/v1/auth/login", data)
@@ -18,6 +21,7 @@ export default function LoginPage() {
         toast.success("Login Successfully Done");
         const token = res.data.access_token;
         localStorage.setItem("token", token);
+        navigate("/");
       })
       .catch((err) => {
         if (err.status === 400) {

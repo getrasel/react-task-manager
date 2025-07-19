@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Input from "../component/input";
 import Button from "../component/button";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [error, setError] = useState([]);
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -21,16 +22,15 @@ export default function Register() {
         toast.success("Login Successfully Done, Please Login");
         console.log(res);
         setError([]);
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
 
         if (err.status == 400) {
           setError(err.response.data.message);
-        } else if (err.status == 401) {
-          toast.error("User already exists or password mismatch");
         } else {
-          setError(err.response.data.message);
+          setError([err.response.data.message]);
         }
       });
   };
