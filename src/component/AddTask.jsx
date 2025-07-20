@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import Input from "./input";
 import Textarea from "./Textarea";
 import Button from "./button";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddTask({ TaskAdd }) {
+  const [loading, setLoading] = useState(false);
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+    };
+    axios
+      .post("https://task-manager64.up.railway.app/api/v1/tasks", data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        toast.success("Task Added Successfully Done");
+        TaskAdd(false);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something Went Wrong");
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <div
@@ -22,10 +50,10 @@ export default function AddTask({ TaskAdd }) {
           />
         </div>
         <div className="p-8">
-          <form action="" className="space-y-5">
-            <Input type="text" label="Task Title" />
-            <Textarea label="Task Description" />
-            <Button name="Add Task" />
+          <form className="space-y-5" onSubmit={handleAddTask}>
+            <Input type="text" label="Task Title" inputName="title" />
+            <Textarea label="Task Description" inputName="description" />
+            <Button name="Add Task" loading={loading} />
           </form>
         </div>
       </div>

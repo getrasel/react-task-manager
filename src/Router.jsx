@@ -17,6 +17,7 @@ export default function RouterApp() {
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="*" element={<h1>404 error</h1>} />
         </Routes>
       </BrowserRouter>
     </div>
