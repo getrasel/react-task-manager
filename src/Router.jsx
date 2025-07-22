@@ -5,6 +5,7 @@ import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import ProtectedRouter from "./utis/ProtectedRouter";
 import Profile from "./pages/Profile";
+import TaskDetails from "./pages/TaskDetails";
 
 export default function RouterApp() {
   return (
@@ -13,6 +14,7 @@ export default function RouterApp() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/tasks/:id" element={<TaskDetails />} />
           <Route element={<ProtectedRouter />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<Profile />} />
