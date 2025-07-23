@@ -21,7 +21,7 @@ export default function TaskCard({ task }) {
         <span className="py-1 px-4 bg-green-500 text-white rounded-md ">
           Completed
         </span>
-      ) : task.canselled ? (
+      ) : task.status == "cancelled" ? (
         <span className="py-1 px-4 bg-red-500 text-white rounded-md ">
           Cancelled
         </span>

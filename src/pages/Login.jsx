@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Input from "../component/input";
 import Button from "../component/button";
@@ -7,7 +7,9 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleLogin = (e) => {
+    setLoading(true);
     e.preventDefault();
     const data = {
       email: e.target.email.value,
@@ -29,6 +31,9 @@ export default function LoginPage() {
         } else {
           toast.error(err.response.data.message);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
@@ -49,7 +54,7 @@ export default function LoginPage() {
                   Remember me
                 </label>
               </div>
-              <Button btn="submit" name="Login" />
+              <Button btn="submit" name="Login" loading={loading} />
               <p>
                 Don't have account?
                 <Link to="/register" className="text-blue-600 ml-1">

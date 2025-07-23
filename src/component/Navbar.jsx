@@ -18,7 +18,9 @@ export default function Navbar({ TaskAddNav }) {
             Add Task
           </Link>
           <Link to="/profile">Profile</Link>
-          <a onClick={handleLogout}>Logout</a>
+          <a onClick={handleLogout} className="cursor-pointer">
+            Logout
+          </a>
         </nav>
       </div>
     </header>

@@ -25,6 +25,7 @@ export default function AddTask({ TaskAdd }) {
         toast.success("Task Added Successfully Done");
         TaskAdd(false);
         setLoading(false);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

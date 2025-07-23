@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../component/Layout";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import toast from "react-hot-toast";
 
 export default function TaskDetails() {
   const params = useParams();
   const taskId = params.id;
   const [gettasks, setGetasks] = useState({});
+  const navigate = useNavigate();
 
   const handleTaskId = () => {
     axios
@@ -23,6 +25,36 @@ export default function TaskDetails() {
       });
   };
 
+  const handleDeleteTask = () => {
+    axios
+      .delete(`https://task-manager64.up.railway.app/api/v1/tasks/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        toast.success("Task Delete Successfully Done");
+        navigate("/");
+        console.log(res);
+      })
+      .catch((err) => {
+        toast.error("Something Went Wrong");
+        console.log(err);
+      });
+  };
+
+  const handleTaskStatus = (status) => {
+    axios.patch(
+      `https://task-manager64.up.railway.app/api/v1/tasks/${taskId}`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+  };
+
   useEffect(() => {
     handleTaskId();
   }, []);
@@ -31,25 +63,42 @@ export default function TaskDetails() {
     <>
       <Layout>
         <div className="px-8 py-4">
-          <h1 className="font-semibold text-2xl mb-2.5">{gettasks.title}</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="font-semibold text-2xl mb-2.5">{gettasks.title}</h1>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer font-semibold"
+              onClick={handleDeleteTask}
+            >
+              Delete
+            </button>
+          </div>
           <p className="line-clamp-4 mb-4">{gettasks.description}</p>
-          {gettasks.status == "todo" ? (
-            <span className="py-1 px-4 bg-yellow-500 text-white rounded-md ">
-              todo
-            </span>
-          ) : gettasks.status == "in_progress" ? (
-            <span className="py-1 px-4 bg-blue-500 text-white rounded-md ">
-              In Progress
-            </span>
-          ) : gettasks.status == "completed" ? (
-            <span className="py-1 px-4 bg-green-500 text-white rounded-md ">
+          <select
+            className="border border-gray-300 rounded px-3 py-2 mr-2 outline-none"
+            onChange={(e) => handleTaskStatus(e.target.value)}
+          >
+            <option value="todo" selected={gettasks.status === "todo"}>
+              Todo
+            </option>
+            <option
+              value="in_progress"
+              selected={gettasks.status === "in_progress"}
+            >
+              In progress
+            </option>
+            <option
+              value="completed"
+              selected={gettasks.status === "completed"}
+            >
               Completed
-            </span>
-          ) : gettasks.canselled ? (
-            <span className="py-1 px-4 bg-red-500 text-white rounded-md ">
+            </option>
+            <option
+              value="cancelled"
+              selected={gettasks.status === "cancelled"}
+            >
               Cancelled
-            </span>
-          ) : null}
+            </option>
+          </select>
         </div>
       </Layout>
     </>
