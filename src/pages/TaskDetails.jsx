@@ -3,11 +3,13 @@ import Layout from "../component/Layout";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
+import Update from "../component/Update";
 
 export default function TaskDetails() {
   const params = useParams();
   const taskId = params.id;
   const [gettasks, setGetasks] = useState({});
+  const [update, setUpdate] = useState(false);
   const navigate = useNavigate();
 
   const handleTaskId = () => {
@@ -66,6 +68,12 @@ export default function TaskDetails() {
           <div className="flex justify-between items-center">
             <h1 className="font-semibold text-2xl mb-2.5">{gettasks.title}</h1>
             <button
+              className="bg-indigo-500 text-white px-4 py-2 rounded cursor-pointer font-semibold"
+              onClick={() => setUpdate(true)}
+            >
+              Update
+            </button>
+            <button
               className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer font-semibold"
               onClick={handleDeleteTask}
             >
@@ -100,6 +108,16 @@ export default function TaskDetails() {
             </option>
           </select>
         </div>
+        {update && (
+          <Update
+            updateTask={setUpdate}
+            taskId={taskId}
+            taskData={{
+              title: gettasks.title,
+              description: gettasks.description,
+            }}
+          />
+        )}
       </Layout>
     </>
   );

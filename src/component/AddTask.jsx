@@ -6,7 +6,7 @@ import Button from "./button";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function AddTask({ TaskAdd }) {
+export default function AddTask({ ChangeAddTask }) {
   const [loading, setLoading] = useState(false);
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ export default function AddTask({ TaskAdd }) {
       })
       .then((res) => {
         toast.success("Task Added Successfully Done");
-        TaskAdd(false);
+        ChangeAddTask(false);
         setLoading(false);
         window.location.reload();
       })
@@ -38,7 +38,7 @@ export default function AddTask({ TaskAdd }) {
     <>
       <div
         className="w-full h-screen bg-black/20 fixed z-20 backdrop-blur-[6px]"
-        onClick={() => TaskAdd(false)}
+        onClick={() => ChangeAddTask(false)}
       ></div>
       <div className="w-md bg-white fixed z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md">
         <h2 className="text-2xl font-semibold text-center border-b-1 border-slate-400 p-4 pb-3">
@@ -47,7 +47,7 @@ export default function AddTask({ TaskAdd }) {
         <div className="absolute -top-4 -right-4">
           <MdOutlineClose
             className="text-4xl bg-black/80 text-white rounded-md cursor-pointer"
-            onClick={() => TaskAdd(false)}
+            onClick={() => ChangeAddTask(false)}
           />
         </div>
         <div className="p-8">

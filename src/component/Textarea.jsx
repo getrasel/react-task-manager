@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Textarea({ label, inputName }) {
+export default function Textarea({ label, inputName, value, onChange }) {
   return (
     <>
       <label className="block font-medium text-gray-700 mb-0.5">{label}</label>
@@ -9,6 +9,8 @@ export default function Textarea({ label, inputName }) {
         rows={4}
         placeholder={label}
         name={inputName}
+        value={value}
+        onChange={onChange}
       ></textarea>
     </>
   );

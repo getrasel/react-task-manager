@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router";
 
-export default function Navbar({ TaskAddNav }) {
+export default function Navbar({ ChangeAddTask }) {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -14,7 +14,7 @@ export default function Navbar({ TaskAddNav }) {
           Task Manager
         </Link>
         <nav className="flex gap-6">
-          <Link to="/" onClick={() => TaskAddNav(true)}>
+          <Link to="/" onClick={() => ChangeAddTask(true)}>
             Add Task
           </Link>
           <Link to="/profile">Profile</Link>
