@@ -4,27 +4,27 @@ import { MdOutlineClose } from "react-icons/md";
 import Input from "./input";
 import Textarea from "./Textarea";
 import Button from "./button";
-import { toast } from "react-hot-toast";
 
-export default function Update({ updateTask, taskId, taskData }) {
+export default function Update({ updateTask, UpdateAllField, taskId }) {
+  const [title, setTitle] = useState(UpdateAllField.title || "");
+  const [description, setDescription] = useState(
+    UpdateAllField.description || ""
+  );
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    if (taskData) {
-      setTitle(taskData.title || "");
-      setDescription(taskData.description || "");
-    }
-  }, [taskData]);
 
   const handleUpdateTask = (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const data = {
+      title: e.target.title.value,
+      description: e.target.description.value,
+    };
+
     axios
       .patch(
         `https://task-manager64.up.railway.app/api/v1/tasks/${taskId}`,
-        { title, description },
+        data,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -32,7 +32,7 @@ export default function Update({ updateTask, taskId, taskData }) {
         }
       )
       .then((res) => {
-        toast.success("Task Update Successfully");
+        console.log(res.data);
         updateTask(false);
         setLoading(false);
         window.location.reload();
@@ -40,7 +40,6 @@ export default function Update({ updateTask, taskId, taskData }) {
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        toast.error("Something Went Wrong");
       });
   };
 

@@ -112,7 +112,7 @@ export default function TaskDetails() {
           <Update
             updateTask={setUpdate}
             taskId={taskId}
-            taskData={{
+            UpdateAllField={{
               title: gettasks.title,
               description: gettasks.description,
             }}
